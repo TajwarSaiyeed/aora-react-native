@@ -3,7 +3,7 @@ import {Image, ScrollView, Text, View} from "react-native";
 import {images} from "../constants"
 import CustomButton from "../components/custom-button";
 import {StatusBar} from "expo-status-bar";
-import {Redirect, router} from "expo-router";
+import {router} from "expo-router";
 
 
 const App = () => {

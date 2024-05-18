@@ -33,8 +33,22 @@ const RootLayout = () => {
                           options={{
                               headerShown: false
                           }}
-            >
-            </Stack.Screen>
+            />
+            <Stack.Screen name={'(auth)'}
+                          options={{
+                              headerShown: false
+                          }}
+            />
+            <Stack.Screen name={'(tabs)'}
+                          options={{
+                              headerShown: false
+                          }}
+            />
+            {/*<Stack.Screen name={'/search/[query]'}*/}
+            {/*              options={{*/}
+            {/*                  headerShown: false*/}
+            {/*              }}*/}
+            {/*/>*/}
         </Stack>
     )
 };
