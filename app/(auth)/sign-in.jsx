@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, Text, View} from "react-native";
+import {Alert, Image, ScrollView, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {images} from '../../constants'
 import FormField from "../../components/form-field";
 import CustomButton from "../../components/custom-button";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
+import {getCurrentUser, signIn} from "../../lib/appwrite";
+import {useGlobalContext} from "../../context/GlobalProvider";
 
 const SignIn = () => {
+    const {setUser, setIsLoggedIn} = useGlobalContext()
     const [form, setForm] = useState({
         email: "",
         password: ""
@@ -15,7 +18,31 @@ const SignIn = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
 
-    const submit = () => {
+    const submit = async () => {
+        if (!form.email || !form.password) {
+            Alert.alert("Error", "Please fill all fields")
+            return;
+        } else if (form.password.length < 8) {
+            Alert.alert("Error", "Password must be at least 8 characters")
+            return;
+        }
+        setIsSubmitting(true)
+        try {
+            await signIn(form.email, form.password);
+            const result = await getCurrentUser();
+            setUser(result)
+            setIsLoggedIn(true)
+            router.replace('/home')
+        } catch (e) {
+            console.error(e)
+            Alert.alert("Error", e.message)
+        } finally {
+            setIsSubmitting(false)
+            setForm({
+                email: "",
+                password: ""
+            })
+        }
     }
 
     return (
