@@ -5,7 +5,7 @@ const Trending = ({posts}) => {
     return (
         <FlatList
             data={posts}
-            renderItem={({item}) => (<Text className={'text-white text-2xl'}>{item.id}</Text>)}
+            renderItem={({item}) => (<Text className={'text-white text-2xl'}>{item.title}</Text>)}
             horizontal
         />
     );

@@ -5,30 +5,29 @@ import {images} from "../../constants";
 import SearchInput from "../../components/search-input";
 import Trending from "../../components/trending";
 import EmptyState from "../../components/empty-state";
+import {getALlLatestPosts, getALlPosts} from "../../lib/appwrite";
+import useAppwrite from "../../hooks/useAppwrite";
+import VideoCard from "../../components/video-card";
 
 const Home = () => {
     const [refreshing, setRefreshing] = useState(false);
 
+    const {data: posts, refetch} = useAppwrite(getALlPosts);
+    const {data: latestPosts,} = useAppwrite(getALlLatestPosts);
 
-    const onRefresh = () => {
+
+    const onRefresh = async () => {
         setRefreshing(true);
-        // re call videos -> if any new videos appeard
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 2000);
+        await refetch();
+        setRefreshing(false);
     }
 
     return (
         <SafeAreaView className={'bg-primary h-full'}>
             <FlatList
-                data={[
-                    {id: 1, name: 'John'},
-                    {id: 2, name: 'Doe'},
-                    {id: 3, name: 'Jane'},
-                ]}
-                // data={[]}
+                data={posts}
                 keyExtractor={item => item.$id}
-                renderItem={({item}) => <Text className={'text-3xl text-white'}>{item.name}</Text>}
+                renderItem={({item}) => <VideoCard data={item}/>}
                 ListHeaderComponent={() => (
                     <View className={'my-6 px-6 space-y-6'}>
                         <View className={'justify-between items-start flex-row mb-6'}>
@@ -52,12 +51,7 @@ const Home = () => {
                                 Latest Videos
                             </Text>
                             <Trending
-                                posts={[
-                                    {id: 1},
-                                    {id: 2},
-                                    {id: 3},
-                                    {id: 4},
-                                ] ?? []}
+                                posts={latestPosts ?? []}
                             />
                         </View>
                     </View>
