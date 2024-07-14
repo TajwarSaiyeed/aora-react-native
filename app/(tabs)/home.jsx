@@ -8,9 +8,11 @@ import EmptyState from "../../components/empty-state";
 import {getALlLatestPosts, getALlPosts} from "../../lib/appwrite";
 import useAppwrite from "../../hooks/useAppwrite";
 import VideoCard from "../../components/video-card";
+import {useGlobalContext} from "../../context/GlobalProvider";
 
 const Home = () => {
     const [refreshing, setRefreshing] = useState(false);
+    const {user} = useGlobalContext();
 
     const {data: posts, refetch} = useAppwrite(getALlPosts);
     const {data: latestPosts,} = useAppwrite(getALlLatestPosts);
@@ -32,9 +34,9 @@ const Home = () => {
                     <View className={'my-6 px-6 space-y-6'}>
                         <View className={'justify-between items-start flex-row mb-6'}>
                             <View>
-                                <Text className={'font-pmedium text-sm text-gray-100'}>Welcome Back</Text>
-                                <Text className={'text-2xl font-psemibold text-white'}>
-                                    Tajwar Saiyeed
+                                <Text className={'font-pmedium text-sm text-gray-100'}>Welcome Back,</Text>
+                                <Text className={'capitalize text-2xl font-psemibold text-white'}>
+                                    {user.documents && user?.documents[0]?.username}
                                 </Text>
                             </View>
                             <View className={'mt-1.5'}>
