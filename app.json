@@ -30,6 +30,21 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b65b28ec-4e7c-4263-b66a-bfc4bbebc42b"
+      }
+    },
+    "owner": "tajwarsaiyeed",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b65b28ec-4e7c-4263-b66a-bfc4bbebc42b"
+    }
   }
 }
